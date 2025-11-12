@@ -1,18 +1,40 @@
 # Step 1: What Are We Actually Measuring?
 
+## The Challenge
+
+Imagine you want to know the distance between two cities on Earth - say, New York and London. You can easily look up their coordinates:
+- **New York City**: 40.7°N, 74.0°W
+- **London**: 51.5°N, 0.1°W
+
+But how do you calculate the actual distance between them?
+
+You might think to treat them as points in a flat plane and use the Pythagorean theorem. But Earth isn't flat - it's (approximately) a sphere! The shortest path between two cities follows the **curved surface** of the Earth, not a straight line through the planet.
+
+This shortest curved path is called a **great circle distance** or **geodesic distance**, and it's what airplanes try to follow when flying between cities. It's also crucial for:
+- Navigation and GPS systems
+- Calculating shipping routes
+- Astronomy (finding distances between stars on the celestial sphere)
+- Any application involving positions on spherical surfaces
+
+## Our Goal
+
+**Given:** Two points on a sphere with known latitude and longitude, and the sphere's radius
+
+**Find:** The distance between them along the sphere's surface
+
+The formula we'll derive is called the **Spherical Law of Cosines**. It's been used for centuries in navigation and surveying, and it's still used today in mapping applications and GPS technology.
+
+Let's figure out how to solve this problem from first principles!
+
 ## The Setup
 
-Imagine a sphere (like a basketball or the Earth). 
+For this derivation, we'll work with a perfect sphere of radius R.
 
-Note: In the real world, the Earth is not perfectly spherical. The Earth's deviation from a perfect sphere is about 0.3%, making it an oblate spheroid, or slightly flattened at the poles and bulging at the equator. This deviation is approximately 42 km in diameter (about 27 miles), with the equatorial diameter being larger than the polar diameter.
+**A note about Earth:** In reality, Earth is not perfectly spherical - it's an oblate spheroid, slightly flattened at the poles and bulging at the equator. The equatorial radius is 6,378.1 km while the polar radius is 6,356.8 km, a difference of about 21 km (roughly 0.3%). For most purposes, we can treat Earth as a sphere with mean radius **R = 6,371 km** (3,959 miles).
 
-Specifically, the Earth's equatorial radius (the distance from the surface at the equator to the center) is 6,378.1370 km, while the polar radius (the distance from the surface at the poles to the center) is 6,356.7523 km. For the purposes of this example, we will assume that the earth is a sphere with radius 6,371.0087714 km (3,958.7613160 mi).
+Now, how do we find the distance between two points on this sphere? It seems difficult at first, but we can take advantage of a key insight. But before we explore the key insight, let's talk about radians. A great explanation of radians can be found here: https://www.mathsisfun.com/geometry/radians.html
 
-We want to find the distance between two points **along the curved surface** - like an ant walking on the sphere, not tunneling through it. How might we go about doing this? It seems very difficult at first, but we can take advantage of a key insight.
-
-Before we explore the key insight, let's talk about radians. A great explanation of radians can be found here: https://www.mathsisfun.com/geometry/radians.html
-
-I'll re-hash some basic points here
+I'll re-hash some basic points here.
 
 ## A Quick Word About Radians
 
