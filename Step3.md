@@ -67,6 +67,8 @@ Where:
 
 **This is a big claim! Why should we believe these two formulas give the same answer?**
 
+For now, we will treat this as a known fact - but if you're curious where it comes from, see *Appendix B: Deriving the Dot Product Formula*.
+
 ### Understanding Through Special Cases
 
 Let's test this with some specific angles to build intuition:
@@ -135,14 +137,6 @@ If you imagine "projecting" P₁ onto P₂ (like shining a light perpendicular t
 - When vectors are **perpendicular** (θ = 90°): cos(θ) = 0, so there's no projection → dot product is zero
 - When vectors **oppose** (θ ≈ 180°): cos(θ) ≈ -1, so the projection points backward → negative dot product
 
-### The General Truth
-
-The formula `P₁ · P₂ = |P₁| × |P₂| × cos(θ)` works for **all** angles, not just these special cases. Proving this rigorously for the general case requires techniques from linear algebra or advanced trigonometry that are beyond our scope here.
-
-But the key insight is: **both formulas are measuring the same geometric relationship** - how aligned two vectors are. One does it through coordinates, the other through the angle directly.
-
-For our purposes, we'll use this relationship as a proven mathematical fact (a theorem). This formula is a fundamental tool in geometry, physics, and engineering - it's how we connect the algebraic view (coordinates) with the geometric view (angles and lengths).
-
 ## Putting It Together
 
 We now have two ways to calculate the same thing:
@@ -157,9 +151,15 @@ P₁ · P₂ = (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)
 P₁ · P₂ = |P₁| × |P₂| × cos(θ) = R × R × cos(θ) = R² × cos(θ)
 ```
 
-Since they're equal:
+Since both forms of the dot product must be equal:
+```
+(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = |P₁| × |P₂| × cos(θ)
+```
+
+On a sphere of radius R, both vectors have the same length |P₁| = |P₂| = R, so:
+
 ```
 (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = R² × cos(θ)
 ```
 
-**This is powerful!** The left side uses coordinates (which we can calculate from latitude/longitude). The right side has the angle θ we're looking for. We can solve for θ!
+**This is powerful!** The left side uses coordinates (which we can calculate from latitude/longitude). The right side has the angle θ we're looking for. So now, we can solve for θ — the **central angle** between the two points on the sphere.

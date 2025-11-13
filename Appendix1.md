@@ -18,7 +18,7 @@ This proof has two stages. First, we will prove the **Law of Cosines**. Then, we
 
 ## Section 1.1: Proof of Law of Cosines
 
-![Vector graphic](stackoverflow_proof_1.png)
+Suppose we have the following triangle:
 
 ![Triangle graphic](stackoverflow_proof_2.png)
 
@@ -85,8 +85,39 @@ c² = a² + b² − 2ab cos C
 And that’s the **Law of Cosines**.
 
 
-## Section 1.2 Proof of dot product formula
+## Section 1.2 Proof of the Dot Product Formula
 
+Now that we are equipped with the **Law of Cosines**, we can move on to deriving the **dot product formula**.
 
+Let’s go back to the triangle, but now suppose its three sides are represented by the vectors **w**, **v**, and **w − v**.
 
+![Vector graphic](stackoverflow_proof_1.png)
 
+If we plug the side lengths into the Law of Cosines and let the included angle **θ** correspond to angle **C**, we get:
+
+```
+c² = a² + b² − 2ab cos C
+|w − v|² = |v|² + |w|² − 2|v||w| cos θ
+```
+
+We know that the **magnitude** of a vector can be found by taking the distance from the origin to the point described by the vector:
+
+```
+|v| = √(vₓ² + vᵧ²)
+|v|² = vₓ² + vᵧ²
+```
+
+We also know that the vector **w − v** can be represented as **(wₓ − vₓ, wᵧ − vᵧ)**.
+
+This gives us:
+
+```
+|w − v|² = |v|² + |w|² − 2|v||w| cos θ
+(wₓ − vₓ)² + (wᵧ − vᵧ)² = vₓ² + vᵧ² + wₓ² + wᵧ² − 2|v||w| cos θ
+wₓ² − 2wₓvₓ + vₓ² + wᵧ² − 2wᵧvᵧ + vᵧ² = vₓ² + vᵧ² + wₓ² + wᵧ² − 2|v||w| cos θ
+−2wₓvₓ − 2wᵧvᵧ = −2|v||w| cos θ
+wₓvₓ + wᵧvᵧ = |v||w| cos θ
+v ⋅ w = |v||w| cos θ
+```
+
+And there we have it — a clean derivation of the **dot product formula** directly from the **Law of Cosines**.
