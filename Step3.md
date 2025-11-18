@@ -11,6 +11,7 @@ First, let's think of our points differently. Instead of just thinking of (x₁,
 There's an operation called the **dot product** that takes two vectors and produces a single number. Here's how you calculate it:
 
 **The Coordinate Formula:**
+For vectors P₁ = (x₁, y₁, z₁) and P₂ = (x₂, y₂, z₂):
 ```
 P₁ · P₂ = (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)
 ```
@@ -65,9 +66,11 @@ Where:
 - θ = the angle between the two vectors
 - cos(θ) = cosine of that angle
 
-**This is a big claim! Why should we believe these two formulas give the same answer?**
+**This is a big claim! Why should these two formulas give the same answer?**
 
-For now, we will treat this as a known fact - but if you're curious where it comes from, see *Appendix B: Deriving the Dot Product Formula*.
+The proof requires some vector geometry and isn't necessary for understanding how to use the formula. For now, we'll treat this as a known fact and verify it works through examples.
+
+If you're curious about the full derivation, see [Appendix B: Deriving the Dot Product Formula](AppendixB_dot_product_derivation.md).
 
 ### Understanding Through Special Cases
 
@@ -139,27 +142,28 @@ If you imagine "projecting" P₁ onto P₂ (like shining a light perpendicular t
 
 ## Putting It Together
 
-We now have two ways to calculate the same thing:
+We now have two ways to calculate the same dot product:
 
-**From coordinates:**
+**From coordinates** (which we can get from latitude/longitude):
 ```
 P₁ · P₂ = (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)
 ```
 
-**From the angle:**
+**From the angle** (which is what we want to find):
 ```
-P₁ · P₂ = |P₁| × |P₂| × cos(θ) = R × R × cos(θ) = R² × cos(θ)
+P₁ · P₂ = |P₁| × |P₂| × cos(θ)
 ```
 
-Since both forms of the dot product must be equal:
+Since these must be equal:
 ```
 (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = |P₁| × |P₂| × cos(θ)
 ```
 
-On a sphere of radius R, both vectors have the same length |P₁| = |P₂| = R, so:
-
+On a sphere of radius R, both points are on the surface, so |P₁| = |P₂| = R:
 ```
 (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = R² × cos(θ)
 ```
 
-**This is powerful!** The left side uses coordinates (which we can calculate from latitude/longitude). The right side has the angle θ we're looking for. So now, we can solve for θ — the **central angle** between the two points on the sphere.
+**This is our key equation!** The left side we can calculate from coordinates. The right side contains θ, the angle we're looking for.
+
+In the final step, we'll solve this equation for the central angle θ and then convert that central angle into an actual distance on the sphere's surface.

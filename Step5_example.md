@@ -1,4 +1,4 @@
-# A Complete Example: New York to London
+# Step 5: A Worked Example
 
 Let's use our formula to calculate the actual distance between New York City and London!
 

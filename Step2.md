@@ -3,27 +3,28 @@
 ## From Latitude/Longitude to X, Y, Z
 
 When you describe a point on Earth, you use:
-- **Latitude (φ)**: how far north/south (0° at equator, 90° at north pole, -90° or 90°S at south pole)
-- **Longitude (λ)**: how far east/west (0° at prime meridian, ranges from -180° to 180°, or 0° to 360°)
+- **Latitude (φ)**: how far north/south (0° at equator, 90° at north pole, -90° at south pole)
+- **Longitude (λ)**: how far east/west (0° at prime meridian, ranges from -180° to 180°)
+
+**Note:** I'm using the Greek letters φ (phi) for latitude and λ (lambda) for longitude because it's the standard mathematical convention. This makes our formulas match what you'll see in textbooks and code.
 
 ### Examples of Real-World Locations
 
-Here are 10 well-known locations with their approximate coordinates:
+To build intuition for how latitude and longitude work, here are a few examples:
 
-1. **New York City, USA**: 40.7°N, -74.0°W (or 40.7°, -74.0°)
-2. **London, UK**: 51.5°N, -0.1°W (or 51.5°, -0.1°)
-3. **Tokyo, Japan**: 35.7°N, 139.7°E (or 35.7°, 139.7°)
-4. **Sydney, Australia**: -33.9°S, 151.2°E (or -33.9°, 151.2°)
-5. **Rio de Janeiro, Brazil**: -22.9°S, -43.2°W (or -22.9°, -43.2°)
-6. **Cairo, Egypt**: 30.0°N, 31.2°E (or 30.0°, 31.2°)
-7. **Mumbai, India**: 19.1°N, 72.9°E (or 19.1°, 72.9°)
-8. **Cape Town, South Africa**: -34.0°S, 18.4°E (or -34.0°, 18.4°)
-9. **Moscow, Russia**: 55.8°N, 37.6°E (or 55.8°, 37.6°)
-10. **Mexico City, Mexico**: 19.4°N, -99.1°W (or 19.4°, -99.1°)
+- **New York City, USA**: (40.7°, -74.0°)
+- **Tokyo, Japan**: (35.7°, 139.7°)
+- **Sydney, Australia**: (-33.9°, 151.2°)
 
-**Note:** In mathematical formulas, we typically use the convention where north latitudes are positive, south latitudes are negative, east longitudes are positive, and west longitudes are negative.
+Notice how the signs tell you the hemisphere: positive latitude = north, negative = south, positive longitude = east, negative = west.
 
-But to find angles, it's easier to describe where the point is in **3D space** using x, y, z coordinates.
+**Note:** You might see coordinates written as "33.9°S, 151.2°E" instead of "(-33.9°, 151.2°)". These mean the same thing! The letters (N/S/E/W) are just another way to indicate the sign. In our mathematical formulas, we'll use the positive/negative number convention.
+
+Want to test your intuition? Try the [latitude/longitude guessing game](AppendixA_coordinate_guessing_game.md) before continuing!
+
+---
+
+Now, to calculate distances between points on a sphere, we need to work with angles. The easiest way to do this is to convert our latitude/longitude coordinates into **3D space** using x, y, z coordinates.
 
 ## The Conversion
 
@@ -37,19 +38,11 @@ We need to set up a 3D coordinate system. Imagine the sphere centered at the ori
   - This point is in the Indian Ocean, west of Sumatra, Indonesia
 - The center of the sphere is at the origin (0, 0, 0)
 
+![Earth_Centered_Inertial_Coordinate_System.png](Earth_Centered_Inertial_Coordinate_System.png)
+
 In this coordinate system, any point on Earth's surface can be described by three numbers (x, y, z), where each represents the distance along that axis from the origin.
 
 **Our goal:** Convert from the familiar latitude/longitude system to this x, y, z system.
-
-For a point at latitude φ and longitude λ, the conversion formulas are:
-
-```
-x = R × cos(φ) × cos(λ)
-y = R × cos(φ) × sin(λ)
-z = R × sin(φ)
-```
-
-These formulas might look intimidating, but we can understand exactly where they come from by breaking them down piece by piece.
 
 ## The Conversion Formulas
 
@@ -61,7 +54,7 @@ y = R × cos(φ) × sin(λ)
 z = R × sin(φ)
 ```
 
-Let's break this down very carefully.
+These formulas might look intimidating, but we can understand exactly where they come from by breaking them down piece by piece.
 
 ### What Are Sine and Cosine?
 
@@ -129,26 +122,72 @@ r = R × cos(φ)
 
 Now we have a circle of radius r in the x-y plane, and we need to find where on this circle our point is. That's what longitude λ tells us!
 
-If we look down at the sphere from above (from the north pole), we see this circle of radius r, and longitude λ is the angle measured from the x-axis.
+If we look down at the sphere from above (from the north pole), we see this circle of radius r. The longitude λ is the angle measured counterclockwise from the x-axis (which points toward 0° longitude).
 
-For a point on a circle of radius r at angle λ:
-- The **x-coordinate** is: r × cos(λ)
-- The **y-coordinate** is: r × sin(λ)
+Let's set up a right triangle to find the x and y coordinates:
+- Draw a line from the origin to our point on the circle (length r)
+- Drop a perpendicular line from the point down to the x-axis
+- This creates a right triangle where:
+  - The **hypotenuse** is r (the radius of our latitude circle)
+  - The **angle** from the x-axis is λ (the longitude)
+  - The **horizontal leg** (along the x-axis) is the x-coordinate
+  - The **vertical leg** (parallel to the y-axis) is the y-coordinate
+
+Using our trigonometry formulas:
+
+For the **x-coordinate**:
+```
+cos(θ) = adjacent side / hypotenuse
+```
+In our triangle: θ = λ, adjacent side = x, hypotenuse = r
+
+Substituting:
+```
+cos(λ) = x / r
+x = r × cos(λ)
+```
+
+For the **y-coordinate**:
+```
+sin(θ) = opposite side / hypotenuse
+```
+In our triangle: θ = λ, opposite side = y, hypotenuse = r
+
+Substituting:
+```
+sin(λ) = y / r
+y = r × sin(λ)
+```
+
+**Check:** At λ = 0° (prime meridian), cos(0°) = 1 and sin(0°) = 0, so the point is on the x-axis ✓  
+**Check:** At λ = 90°, cos(90°) = 0 and sin(90°) = 1, so the point is on the y-axis ✓
 
 **Step 3: Substitute r = R × cos(φ)**
 
+Remember, we found that r = R × cos(φ). Let's substitute this into our x and y formulas:
 ```
 x = r × cos(λ) = [R × cos(φ)] × cos(λ) = R × cos(φ) × cos(λ)
 y = r × sin(λ) = [R × cos(φ)] × sin(λ) = R × cos(φ) × sin(λ)
 ```
 
-And there we have it!
+And there we have it! We've derived all three coordinates in terms of the sphere's radius R, latitude φ, and longitude λ.
 
 ### Summary
 
 The conversion works in two stages:
 1. **Latitude (φ) determines your height z and your distance r from the z-axis**
+   - Height: z = R × sin(φ)
+   - Distance from z-axis: r = R × cos(φ)
 2. **Longitude (λ) determines how to split that distance r into x and y components**
+   - x = r × cos(λ) = R × cos(φ) × cos(λ)
+   - y = r × sin(λ) = R × cos(φ) × sin(λ)
+
+**The complete conversion formulas:**
+```
+x = R × cos(φ) × cos(λ)
+y = R × cos(φ) × sin(λ)
+z = R × sin(φ)
+```
 
 ---
 

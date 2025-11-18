@@ -32,26 +32,49 @@ For this derivation, we'll work with a perfect sphere of radius R.
 
 **A note about Earth:** In reality, Earth is not perfectly spherical - it's an oblate spheroid, slightly flattened at the poles and bulging at the equator. The equatorial radius is 6,378.1 km while the polar radius is 6,356.8 km, a difference of about 21 km (roughly 0.3%). For most purposes, we can treat Earth as a sphere with mean radius **R = 6,371 km** (3,959 miles).
 
-Now, how do we find the distance between two points on this sphere? It seems difficult at first, but we can take advantage of a key insight. But before we explore the key insight, let's talk about radians. A great explanation of radians can be found here: https://www.mathsisfun.com/geometry/radians.html
+Now, how do we find the distance between two points on this sphere? It seems difficult at first, but we can take advantage of a key insight. But before we explore the key insight, let's talk about radians.
 
-I'll re-hash some basic points here.
+A great explanation of radians can be found here: https://www.mathsisfun.com/geometry/radians.html . But for completeness, I'll re-hash some basic points here.
 
 ## A Quick Word About Radians
 
-You're probably used to measuring angles in **degrees** (like 90° for a right angle, 360° for a full circle). But you may remember that there is another way to measure angles called **radians**, and they can be more natural for working with circles and spheres.
+Before we do anything fancy with spheres, we need to ground ourselves in how we measure angles. You’re probably used to **degrees** - 90° for a right angle, 180° for a straight shot, 360° to go all the way around. Radians are just another way to describe the same thing, but they come from geometry itself rather than human convention.
 
-### What's a Radian?
+### What’s a Radian?
 
-**A radian is the angle you get when the arc length equals the radius.** 1 radian is about 57.2958 degrees.
+Here’s the core idea:
 
-(image)
+**A radian is the angle whose arc length matches the radius of the circle.**
 
-If you wrap the radius along the circle's edge, the angle it sweeps out is exactly 1 radian!
+That’s it. No "circle has 360 degrees because... reasons."
+Radians come from the geometry of the circle itself.
 
-### Key Facts
-- Full circle = 360° = 2π radians (about 6.28 radians)
-- Half circle = 180° = π radians
-- Right angle = 90° = π/2 radians
+Imagine taking the radius of the circle - that's just the straight-line distance from the center to the edge - and laying that length along the circumference. The angle that length subtends at the center is **1 radian**.
+
+![radian-circle.svg](radian-circle.svg)
+
+If you lay down that radius-length again, you sweep out another radian. Do it again, another radian. Keep going.
+
+### Why 2π Radians = a Full Circle
+
+Now the key connection: the circumference of a circle is `2π × radius`. 
+
+So if you keep laying the radius along the circumference, how many radius-lengths fit all the way around?
+
+* Total distance around the circle is `2π × radius`
+* Each radian corresponds to one radius-length along the edge
+* So the number of radians in a full loop is:
+  `2π × radius / radius = 2π`
+
+That's the whole secret. A full rotation naturally measures as **2π radians** because that’s how the circle’s own geometry works.
+
+Degrees came later - humans chopped the circle into 360 equal slices for historical/astrological reasons - so we get the mapping:
+
+* Full circle = 360° = 2π radians
+* Half circle = 180° = π radians
+* Quarter turn = 90° = π/2 radians
+
+The important bit: **360° is arbitrary, 2π radians is geometric.**
 
 ### Why Radians Are Perfect For This Problem
 
@@ -127,8 +150,6 @@ Distance along surface = R × θ
 Where:
 - R = radius of the sphere
 - θ = angle at the center **(measured in radians!)**
-
-**Example:** If the angle is 1 radian and radius is 10 meters, the surface distance is 10 meters. If the angle between two points is 3 radians, and the radius is 10 meters, the surfaace distance is 30 meters.
 
 ---
 

@@ -11,7 +11,7 @@ This equation connects:
 - **Left side**: Coordinates of our two points
 - **Right side**: The angle θ we're trying to find
 
-But we don't actually know x₁, y₁, z₁, x₂, y₂, z₂ yet! We only know the latitude and longitude of each point.
+But remember—we don't start with x, y, z coordinates! We start with latitude and longitude. So we need to express everything in terms of φ and λ.
 
 **The plan:** Use the conversion formulas from Step 2 to express everything in terms of latitude and longitude.
 
@@ -167,14 +167,20 @@ d = R × θ
 
 So the complete formula is:
 
+## **The Spherical Law of Cosines**
+
+**Distance between two points on a sphere:**
 ```
 d = R × arccos[sin(φ₁) × sin(φ₂) + cos(φ₁) × cos(φ₂) × cos(Δλ)]
 ```
 
 Where:
-- φ₁, φ₂ are the latitudes of Point 1 and Point 2 (in radians)
-- Δλ = (λ₁ - λ₂) is the difference in longitude (in radians)
-- R is the radius of the sphere
+- φ₁, φ₂ = latitudes of the two points (in radians)
+- Δλ = difference in longitude = |λ₁ - λ₂| (in radians)
+- R = radius of the sphere
+- d = distance along the surface
+
+---
 
 **This is the Spherical Law of Cosines!** 🎉
 
@@ -183,4 +189,10 @@ You've just built this formula by connecting several mathematical ideas:
 - Using the dot product to relate coordinates to angles (accepting one theorem about how dot products work)
 - Simplifying with algebra and the cosine difference identity
 
-While we relied on one significant theorem (the dot product angle formula), the rest followed from elementary geometry and trigonometry. Pretty amazing how these pieces fit together!
+While we relied on one key theorem (the dot product angle formula from Appendix B), everything else followed from basic geometry, trigonometry, and algebra - that is, "first principles." Pretty amazing how these pieces fit together!
+
+---
+
+## Want to See It in Action?
+
+We've derived the formula—now let's use it! See [Step 5: A Worked Example](Step5_example.md) to calculate the actual distance between two cities and verify the formula works.
