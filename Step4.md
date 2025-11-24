@@ -1,198 +1,302 @@
-# Step 4: Putting It All Together (The Finale!)
+# Step 4: The Algebra (Deriving the Final Formula)
 
 ## Where We Are
 
-From Step 3, we discovered:
+From Step 3, we have:
+
 ```
-(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = R² × cos(θ)
+d = 2R × arcsin(chord / (2R))
 ```
 
-This equation connects:
-- **Left side**: Coordinates of our two points
-- **Right side**: The angle θ we're trying to find
+Where the chord is:
+```
+chord = √[(x₂ - x₁)² + (y₂ - y₁)² + (z₂ - z₁)²]
+```
 
-But remember—we don't start with x, y, z coordinates! We start with latitude and longitude. So we need to express everything in terms of φ and λ.
-
-**The plan:** Use the conversion formulas from Step 2 to express everything in terms of latitude and longitude.
-
-## Substituting the Conversion Formulas
-
-Recall from Step 2, for any point:
+And from Step 2, we know how to convert latitude/longitude to coordinates:
 ```
 x = R × cos(φ) × cos(λ)
 y = R × cos(φ) × sin(λ)
 z = R × sin(φ)
 ```
 
-Let's substitute these for both points. We'll do this term by term.
+**Our goal:** Combine these to get a formula that uses only φ₁, λ₁, φ₂, λ₂, and R.
 
-### First term: `(x₁ × x₂)`
+## Step 1: Substitute the Coordinate Formulas
 
-For Point 1: `x₁ = R × cos(φ₁) × cos(λ₁)`  
-For Point 2: `x₂ = R × cos(φ₂) × cos(λ₂)`
+Let's write out all six coordinates:
 
-Multiply them:
+**Point 1:**
 ```
-(x₁ × x₂) = [R × cos(φ₁) × cos(λ₁)] × [R × cos(φ₂) × cos(λ₂)]
-          = R² × cos(φ₁) × cos(φ₂) × cos(λ₁) × cos(λ₂)
-```
-
-### Second term: `(y₁ × y₂)`
-
-For Point 1: `y₁ = R × cos(φ₁) × sin(λ₁)`  
-For Point 2: `y₂ = R × cos(φ₂) × sin(λ₂)`
-
-Multiply them:
-```
-(y₁ × y₂) = [R × cos(φ₁) × sin(λ₁)] × [R × cos(φ₂) × sin(λ₂)]
-          = R² × cos(φ₁) × cos(φ₂) × sin(λ₁) × sin(λ₂)
+x₁ = R × cos(φ₁) × cos(λ₁)
+y₁ = R × cos(φ₁) × sin(λ₁)
+z₁ = R × sin(φ₁)
 ```
 
-### Third term: `(z₁ × z₂)`
-
-For Point 1: `z₁ = R × sin(φ₁)`  
-For Point 2: `z₂ = R × sin(φ₂)`
-
-Multiply them:
+**Point 2:**
 ```
-(z₁ × z₂) = [R × sin(φ₁)] × [R × sin(φ₂)]
-          = R² × sin(φ₁) × sin(φ₂)
+x₂ = R × cos(φ₂) × cos(λ₂)
+y₂ = R × cos(φ₂) × sin(λ₂)
+z₂ = R × sin(φ₂)
 ```
 
-## Adding the Three Terms
+Now we need to calculate (x₂ - x₁)², (y₂ - y₁)², and (z₂ - z₁)².
 
-Now add all three terms together:
-```
-(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = 
-    R² × cos(φ₁) × cos(φ₂) × cos(λ₁) × cos(λ₂)
-  + R² × cos(φ₁) × cos(φ₂) × sin(λ₁) × sin(λ₂)
-  + R² × sin(φ₁) × sin(φ₂)
-```
-
-Let's factor out the common terms from the first two lines. Both have `R² × cos(φ₁) × cos(φ₂)`:
+### Calculating (x₂ - x₁)²
 
 ```
-= R² × cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
-  + R² × sin(φ₁) × sin(φ₂)
+x₂ - x₁ = R × cos(φ₂) × cos(λ₂) - R × cos(φ₁) × cos(λ₁)
+        = R × [cos(φ₂) × cos(λ₂) - cos(φ₁) × cos(λ₁)]
 ```
 
-**Now look at the bracketed part:** `[cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]`
-
-This looks pretty messy! But here's some good news: mathematicians have discovered many **trigonometric identities** - formulas that simplify complicated combinations of sines and cosines.
-
-One of the most useful identities is the **cosine difference formula**:
-
+Squaring:
 ```
-cos(A - B) = cos(A) × cos(B) + sin(A) × sin(B)
+(x₂ - x₁)² = R² × [cos(φ₂) × cos(λ₂) - cos(φ₁) × cos(λ₁)]²
 ```
 
-This says that if you want to find the cosine of the difference between two angles, you can calculate it using this combination of products instead.
-
-**Notice anything?** Our bracketed expression has exactly this form! If we let A = λ₁ and B = λ₂:
+### Calculating (y₂ - y₁)²
 
 ```
-cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂) = cos(λ₁ - λ₂)
+y₂ - y₁ = R × cos(φ₂) × sin(λ₂) - R × cos(φ₁) × sin(λ₁)
+        = R × [cos(φ₂) × sin(λ₂) - cos(φ₁) × sin(λ₁)]
 ```
 
-The difference in longitude, `(λ₁ - λ₂)`, is often written as **Δλ** (delta lambda), so:
-
+Squaring:
 ```
-cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂) = cos(Δλ)
-```
-
-## Simplifying Our Expression
-
-Now let's substitute `cos(Δλ)` back into our equation. We had:
-
-```
-R² × cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
-+ R² × sin(φ₁) × sin(φ₂)
+(y₂ - y₁)² = R² × [cos(φ₂) × sin(λ₂) - cos(φ₁) × sin(λ₁)]²
 ```
 
-Becomes:
+### Calculating (z₂ - z₁)²
 
 ```
-R² × cos(φ₁) × cos(φ₂) × cos(Δλ) + R² × sin(φ₁) × sin(φ₂)
+z₂ - z₁ = R × sin(φ₂) - R × sin(φ₁)
+        = R × [sin(φ₂) - sin(φ₁)]
 ```
 
-We can factor out R² from both terms:
-
+Squaring:
 ```
-R² × [cos(φ₁) × cos(φ₂) × cos(Δλ) + sin(φ₁) × sin(φ₂)]
-```
-
-## Connecting Back to the Angle
-
-Remember from Step 3, we know that:
-
-```
-(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = R² × cos(θ)
+(z₂ - z₁)² = R² × [sin(φ₂) - sin(φ₁)]²
 ```
 
-We just calculated the left side, so:
+## Step 2: Add Them Together
 
+The chord squared is:
 ```
-R² × [cos(φ₁) × cos(φ₂) × cos(Δλ) + sin(φ₁) × sin(φ₂)] = R² × cos(θ)
-```
-
-**Divide both sides by R²:**
-
-```
-cos(φ₁) × cos(φ₂) × cos(Δλ) + sin(φ₁) × sin(φ₂) = cos(θ)
+chord² = (x₂ - x₁)² + (y₂ - y₁)² + (z₂ - z₁)²
+       = R² × [cos(φ₂) × cos(λ₂) - cos(φ₁) × cos(λ₁)]²
+       + R² × [cos(φ₂) × sin(λ₂) - cos(φ₁) × sin(λ₁)]²
+       + R² × [sin(φ₂) - sin(φ₁)]²
 ```
 
-We can rearrange this slightly to make it look cleaner:
-
+Factor out R²:
 ```
-cos(θ) = sin(φ₁) × sin(φ₂) + cos(φ₁) × cos(φ₂) × cos(Δλ)
-```
-
-## Solving for the Angle θ
-
-To find θ from cos(θ), we use the inverse cosine function (also called arccos or cos⁻¹):
-
-```
-θ = arccos[sin(φ₁) × sin(φ₂) + cos(φ₁) × cos(φ₂) × cos(Δλ)]
+chord² = R² × {[cos(φ₂) × cos(λ₂) - cos(φ₁) × cos(λ₁)]²
+             + [cos(φ₂) × sin(λ₂) - cos(φ₁) × sin(λ₁)]²
+             + [sin(φ₂) - sin(φ₁)]²}
 ```
 
-**This is the angle (in radians) between the two points at the center of the sphere!**
+## Step 3: Expand the Squared Terms
 
-## Finding the Distance
+This is going to get messy before it gets clean! Let's expand each squared bracket using (a - b)² = a² - 2ab + b².
 
-Finally, remember from Step 1 that the distance along the surface equals the radius times the angle (in radians):
+**First bracket:**
+```
+[cos(φ₂) × cos(λ₂) - cos(φ₁) × cos(λ₁)]²
+= cos²(φ₂) × cos²(λ₂) - 2cos(φ₂) × cos(λ₂) × cos(φ₁) × cos(λ₁) + cos²(φ₁) × cos²(λ₁)
+```
+
+**Second bracket:**
+```
+[cos(φ₂) × sin(λ₂) - cos(φ₁) × sin(λ₁)]²
+= cos²(φ₂) × sin²(λ₂) - 2cos(φ₂) × sin(λ₂) × cos(φ₁) × sin(λ₁) + cos²(φ₁) × sin²(λ₁)
+```
+
+**Third bracket:**
+```
+[sin(φ₂) - sin(φ₁)]²
+= sin²(φ₂) - 2sin(φ₂) × sin(φ₁) + sin²(φ₁)
+```
+
+## Step 4: Combine and Simplify
+
+Adding all three expanded terms together (in the order they appear):
 
 ```
-d = R × θ
+chord² = R² × {
+    cos²(φ₂) × cos²(λ₂) 
+  - 2cos(φ₂) × cos(λ₂) × cos(φ₁) × cos(λ₁) 
+  + cos²(φ₁) × cos²(λ₁)
+  + cos²(φ₂) × sin²(λ₂) 
+  - 2cos(φ₂) × sin(λ₂) × cos(φ₁) × sin(λ₁) 
+  + cos²(φ₁) × sin²(λ₁)
+  + sin²(φ₂) 
+  - 2sin(φ₂) × sin(φ₁) 
+  + sin²(φ₁)
+}
 ```
 
-So the complete formula is:
+Now let's regroup these terms to make patterns more visible. We'll collect all the Point 2 terms, all the Point 1 terms, and all the negative cross-terms:
 
-## **The Spherical Law of Cosines**
+```
+chord² = R² × {
+    cos²(φ₂) × cos²(λ₂) + cos²(φ₂) × sin²(λ₂) + sin²(φ₂)
+  + cos²(φ₁) × cos²(λ₁) + cos²(φ₁) × sin²(λ₁) + sin²(φ₁)
+  - 2cos(φ₂) × cos(φ₁) × cos(λ₂) × cos(λ₁) 
+  - 2cos(φ₂) × cos(φ₁) × sin(λ₂) × sin(λ₁)
+  - 2sin(φ₂) × sin(φ₁)
+}
+```
+
+We can factor the fourth and fifth lines:
+
+```
+chord² = R² × {
+    cos²(φ₂) × cos²(λ₂) + cos²(φ₂) × sin²(λ₂) + sin²(φ₂)
+  + cos²(φ₁) × cos²(λ₁) + cos²(φ₁) × sin²(λ₁) + sin²(φ₁)
+  - 2cos(φ₂) × cos(φ₁) × [cos(λ₂) × cos(λ₁) + sin(λ₂) × sin(λ₁)]
+  - 2sin(φ₂) × sin(φ₁)
+}
+```
+
+Now let's simplify the first line. Notice:
+```
+cos²(φ₂) × cos²(λ₂) + cos²(φ₂) × sin²(λ₂) = cos²(φ₂) × [cos²(λ₂) + sin²(λ₂)]
+```
+
+Using the Pythagorean identity **cos²(λ) + sin²(λ) = 1**:
+```
+= cos²(φ₂) × 1 = cos²(φ₂)
+```
+
+So the first line becomes:
+```
+cos²(φ₂) + sin²(φ₂) = 1
+```
+
+Similarly, the second line:
+```
+cos²(φ₁) × cos²(λ₁) + cos²(φ₁) × sin²(λ₁) + sin²(φ₁) = 1
+```
+
+Our expression simplifies to:
+```
+chord² = R² × {
+    1 + 1
+  - 2cos(φ₂) × cos(φ₁) × [cos(λ₂) × cos(λ₁) + sin(λ₂) × sin(λ₁)]
+  - 2sin(φ₂) × sin(φ₁)
+}
+```
+
+```
+chord² = R² × {2 - 2cos(φ₂) × cos(φ₁) × [cos(λ₂) × cos(λ₁) + sin(λ₂) × sin(λ₁)]
+               - 2sin(φ₂) × sin(φ₁)}
+```
+
+Factor out the 2:
+```
+chord² = 2R² × {1 - cos(φ₂) × cos(φ₁) × [cos(λ₂) × cos(λ₁) + sin(λ₂) × sin(λ₁)]
+                - sin(φ₂) × sin(φ₁)}
+```
+
+## Step 5: Getting to the Final Formula
+
+From Step 4, we have:
+
+```
+chord² = 2R² × {1 - cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
+                - sin(φ₁) × sin(φ₂)}
+```
+
+From Step 3, we know that:
+```
+d = 2R × arcsin(chord / (2R))
+```
+
+So we need to find `chord / (2R)`. Dividing our chord² equation by 4R²:
+
+```
+chord² / (4R²) = (2R²/4R²) × {1 - cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
+                               - sin(φ₁) × sin(φ₂)}
+                
+                = (1/2) × {1 - cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
+                           - sin(φ₁) × sin(φ₂)}
+```
+
+Taking the square root of both sides:
+
+```
+chord / (2R) = √[(1/2) × {1 - cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
+                           - sin(φ₁) × sin(φ₂)}]
+```
+
+Substituting into our distance formula:
+
+---
+
+## **The Final Formula**
 
 **Distance between two points on a sphere:**
+
 ```
-d = R × arccos[sin(φ₁) × sin(φ₂) + cos(φ₁) × cos(φ₂) × cos(Δλ)]
+d = 2R × arcsin(√[(1/2) × {1 - cos(φ₁) × cos(φ₂) × [cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]
+                            - sin(φ₁) × sin(φ₂)}])
 ```
 
 Where:
 - φ₁, φ₂ = latitudes of the two points (in radians)
-- Δλ = difference in longitude = |λ₁ - λ₂| (in radians)
+- λ₁, λ₂ = longitudes of the two points (in radians)
 - R = radius of the sphere
 - d = distance along the surface
 
+This is it! We've derived the complete formula from first principles.
+
 ---
 
-**This is the Spherical Law of Cosines!** 🎉
+## Optional: Further Simplification (The Haversine Formula)
 
-You've just built this formula by connecting several mathematical ideas:
-- Converting latitude/longitude to 3D coordinates using trigonometry
-- Using the dot product to relate coordinates to angles (accepting one theorem about how dot products work)
-- Simplifying with algebra and the cosine difference identity
+The formula above works perfectly, but with some trigonometric identities, we can make it even more compact.
 
-While we relied on one key theorem (the dot product angle formula from Appendix B), everything else followed from basic geometry, trigonometry, and algebra - that is, "first principles." Pretty amazing how these pieces fit together!
+**Using the cosine difference formula:**
+
+The expression `[cos(λ₁) × cos(λ₂) + sin(λ₁) × sin(λ₂)]` equals `cos(λ₁ - λ₂)` or `cos(Δλ)`.
+
+*For a derivation, see [Appendix C: The Cosine Difference Formula](AppendixC_cosine_difference.md).*
+
+This simplifies our formula to:
+```
+d = 2R × arcsin(√[(1/2) × {1 - cos(φ₁) × cos(φ₂) × cos(Δλ) - sin(φ₁) × sin(φ₂)}])
+```
+
+**Using half-angle identities:**
+
+With further trigonometric manipulation (half-angle formulas), this can be rewritten as the famous **Haversine formula**:
+
+Let:
+```
+a = sin²((φ₂ - φ₁)/2) + cos(φ₁) × cos(φ₂) × sin²(Δλ/2)
+```
+
+Then:
+```
+d = 2R × arcsin(√a)
+```
+
+Where Δλ = |λ₁ - λ₂|.
+
+The Haversine formula is particularly popular in navigation and programming because it's numerically stable and compact. But remember—it's just a simplified version of the formula we derived above!
+
+---
+
+**Congratulations!** 🎉 You've just derived one of the most important formulas in navigation and geography, starting from first principles!
+
+You built this by:
+1. Understanding how arc length relates to angles (Step 1)
+2. Converting latitude/longitude to 3D coordinates (Step 2)
+3. Using basic geometry to relate the chord distance to the central angle (Step 3)
+4. Working through the algebra to combine everything (Step 4)
 
 ---
 
 ## Want to See It in Action?
 
-We've derived the formula—now let's use it! See [Step 5: A Worked Example](Step5_example.md) to calculate the actual distance between two cities and verify the formula works.
+We've derived the formula from first principles—now let's verify it works! In [Step 5: A Worked Example](Step5_example.md), we'll calculate the actual distance from New York to London and see how close we get to the real distance.

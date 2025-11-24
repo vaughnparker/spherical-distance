@@ -1,169 +1,130 @@
-# Step 3: Finding the Angle Between Two Points
+# Step 3: Finding the Angle Using a Triangle
 
-## Vectors: Arrows From the Center
+## The Triangle Setup
 
-First, let's think of our points differently. Instead of just thinking of (x₁, y₁, z₁) as a location, think of it as an **arrow (or vector)** pointing from the center of the sphere to Point 1. Similarly, (x₂, y₂, z₂) is an arrow pointing from the center to Point 2.
+Let's think about the geometry here. We have three points:
+- **Point 1 (A):** New York City (on the sphere's surface)
+- **Point 2 (B):** London (on the sphere's surface)  
+- **Point C:** The center of the Earth
 
-**Our goal:** Find the angle θ between these two arrows.
+These three points form a **triangle**! 
 
-## A Useful Tool: The Dot Product
+If we draw lines connecting them:
+- **Side AC:** From center to Point 1 (length = R, the radius)
+- **Side BC:** From center to Point 2 (length = R, the radius)
+- **Side AB:** Direct line from Point 1 to Point 2 (length = chord)
 
-There's an operation called the **dot product** that takes two vectors and produces a single number. Here's how you calculate it:
+The chord is the straight-line distance cutting through the Earth, not the curved distance along the surface. Think of it like tunneling through the Earth instead of flying over it.
 
-**The Coordinate Formula:**
-For vectors P₁ = (x₁, y₁, z₁) and P₂ = (x₂, y₂, z₂):
+Notice something special: **This is an isosceles triangle!** Two of its sides (AC and BC) are both equal to R.
+
+## Splitting the Triangle in Half
+
+Here's where it gets clever. Let's create a new point:
+
+- **Point D:** The midpoint of line AB (halfway between Point 1 and Point 2)
+
+Now draw a line from C (center of Earth) to D (the midpoint). This line **CD splits our isosceles triangle into two identical right triangles**.
+
+Why is it a right triangle? In any isosceles triangle, the line from the apex to the midpoint of the base is perpendicular to the base. So angle ADC = 90°.
+
+Let's focus on one of these right triangles: triangle ACD.
+
+## Examining Triangle ACD
+
+This right triangle has:
+
+**Vertices:**
+- **A:** Point 1 (on the surface)
+- **C:** Center of Earth
+- **D:** Midpoint between Point 1 and Point 2 (inside the Earth)
+
+**Sides:**
+- **AC = R** (the radius—this is our hypotenuse)
+- **AD = chord/2** (half the straight-line distance between our two points)
+- **CD = ?** (we don't actually need this!)
+
+**Angles:**
+- **Angle ADC = 90°** (right angle)
+- **Angle ACD = θ/2** (half of the central angle we're looking for)
+- **Angle DAC = ?** (we don't need this either!)
+
+## Using Basic Trigonometry
+
+Now we can use the most basic trig formula: sine = opposite/hypotenuse.
+
+In our right triangle ACD:
 ```
-P₁ · P₂ = (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)
-```
-
-You just multiply the matching coordinates together and add them up. Simple arithmetic!
-
-**Example:** If P₁ = (1, 2, 3) and P₂ = (4, 5, 6), then:
-```
-P₁ · P₂ = 1×4 + 2×5 + 3×6 = 4 + 10 + 18 = 32
-```
-
-## What Does This Number Mean?
-
-The dot product tells you **how much the two vectors point in the same direction**:
-
-- **Large positive number**: Vectors point in similar directions (small angle between them)
-- **Zero**: Vectors are perpendicular (90° angle between them)
-- **Negative number**: Vectors point in opposite-ish directions (angle greater than 90°)
-
-### Why Does This Happen?
-
-Let's break down what `(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)` is actually doing.
-
-**Each term compares how much the vectors go in the same direction along one axis:**
-
-- **`(x₁ × x₂)`**: If both vectors go in the positive x-direction, x₁ and x₂ are both positive, so `(x₁ × x₂)` is positive. If both go in the negative x-direction, both are negative, so `(x₁ × x₂)` is still positive (negative × negative = positive). But if one goes positive and one goes negative, then `(x₁ × x₂)` is negative.
-
-- **`(y₁ × y₂)`** and **`(z₁ × z₂)`**: Same logic for the y and z directions.
-
-**When you add all three terms together:**
-
-- If the vectors point in **similar directions**, most components will have the same sign, giving you lots of positive contributions → **large positive dot product**
-
-- If the vectors are **perpendicular**, the positive contributions from some axes will cancel out the negative contributions from others → **dot product equals zero**
-
-- If the vectors point in **opposite directions**, most components will have opposite signs, giving you lots of negative contributions → **negative dot product**
-
-The dot product is essentially measuring "agreement" between the vectors across all three dimensions at once!
-
-## The Connection to Angles
-
-Here's where it gets interesting. There's another way to calculate this same dot product, using the angle directly.
-
-**The Angle Formula:**
-```
-P₁ · P₂ = |P₁| × |P₂| × cos(θ)
-```
-
-Where:
-- |P₁| = length of vector P₁ (distance from origin to Point 1)
-- |P₂| = length of vector P₂ (distance from origin to Point 2)
-- θ = the angle between the two vectors
-- cos(θ) = cosine of that angle
-
-**This is a big claim! Why should these two formulas give the same answer?**
-
-The proof requires some vector geometry and isn't necessary for understanding how to use the formula. For now, we'll treat this as a known fact and verify it works through examples.
-
-If you're curious about the full derivation, see [Appendix B: Deriving the Dot Product Formula](AppendixB_dot_product_derivation.md).
-
-### Understanding Through Special Cases
-
-Let's test this with some specific angles to build intuition:
-
-**Case 1: θ = 0° (Vectors point in exactly the same direction)**
-
-Imagine both vectors point along the positive x-axis:
-- P₁ = (5, 0, 0), so |P₁| = 5
-- P₂ = (3, 0, 0), so |P₂| = 3
-
-Using coordinates:
-```
-P₁ · P₂ = (5 × 3) + (0 × 0) + (0 × 0) = 15
+sin(angle ACD) = opposite side / hypotenuse
+sin(θ/2) = AD / AC
+sin(θ/2) = (chord/2) / R
 ```
 
-Using the angle formula (with θ = 0°):
+Simplifying:
 ```
-P₁ · P₂ = 5 × 3 × cos(0°) = 5 × 3 × 1 = 15 ✓
-```
-
-They match!
-
-**Case 2: θ = 90° (Vectors are perpendicular)**
-
-Imagine P₁ points along the x-axis and P₂ points along the y-axis:
-- P₁ = (4, 0, 0), so |P₁| = 4
-- P₂ = (0, 7, 0), so |P₂| = 7
-
-Using coordinates:
-```
-P₁ · P₂ = (4 × 0) + (0 × 7) + (0 × 0) = 0
+sin(θ/2) = chord / (2R)
 ```
 
-Using the angle formula (with θ = 90°):
+To solve for θ/2, we use the inverse sine function (arcsin):
 ```
-P₁ · P₂ = 4 × 7 × cos(90°) = 4 × 7 × 0 = 0 ✓
-```
-
-They match again!
-
-**Case 3: θ = 180° (Vectors point in opposite directions)**
-
-Imagine P₁ points along positive x-axis and P₂ points along negative x-axis:
-- P₁ = (2, 0, 0), so |P₁| = 2
-- P₂ = (-6, 0, 0), so |P₂| = 6
-
-Using coordinates:
-```
-P₁ · P₂ = (2 × -6) + (0 × 0) + (0 × 0) = -12
+θ/2 = arcsin(chord / (2R))
 ```
 
-Using the angle formula (with θ = 180°):
+Therefore:
 ```
-P₁ · P₂ = 2 × 6 × cos(180°) = 2 × 6 × (-1) = -12 ✓
-```
-
-Perfect match once more!
-
-### The Geometric Intuition
-
-There's a beautiful geometric way to understand this formula: **the dot product measures how much one vector extends in the direction of the other.**
-
-If you imagine "projecting" P₁ onto P₂ (like shining a light perpendicular to P₂ and seeing P₁'s "shadow" on it), the length of that projection is |P₁| × cos(θ). Then multiply by |P₂| to get the full dot product.
-
-- When vectors are **aligned** (θ ≈ 0°): cos(θ) ≈ 1, so the projection is maximal → large positive dot product
-- When vectors are **perpendicular** (θ = 90°): cos(θ) = 0, so there's no projection → dot product is zero
-- When vectors **oppose** (θ ≈ 180°): cos(θ) ≈ -1, so the projection points backward → negative dot product
-
-## Putting It Together
-
-We now have two ways to calculate the same dot product:
-
-**From coordinates** (which we can get from latitude/longitude):
-```
-P₁ · P₂ = (x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂)
+θ = 2 × arcsin(chord / (2R))
 ```
 
-**From the angle** (which is what we want to find):
+**This is beautiful!** We've related the central angle θ to the chord length using just basic right-triangle trigonometry.
+
+## From Angle to Distance
+
+Remember from Step 1, the distance along the surface of a sphere equals the radius times the angle (in radians):
+
 ```
-P₁ · P₂ = |P₁| × |P₂| × cos(θ)
+d = R × θ
 ```
 
-Since these must be equal:
+Substituting our expression for θ:
 ```
-(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = |P₁| × |P₂| × cos(θ)
-```
-
-On a sphere of radius R, both points are on the surface, so |P₁| = |P₂| = R:
-```
-(x₁ × x₂) + (y₁ × y₂) + (z₁ × z₂) = R² × cos(θ)
+d = R × 2 × arcsin(chord / (2R))
+d = 2R × arcsin(chord / (2R))
 ```
 
-**This is our key equation!** The left side we can calculate from coordinates. The right side contains θ, the angle we're looking for.
+## Calculating the Chord Length
 
-In the final step, we'll solve this equation for the central angle θ and then convert that central angle into an actual distance on the sphere's surface.
+We need to find the chord—the straight-line distance between Point 1 at (x₁, y₁, z₁) and Point 2 at (x₂, y₂, z₂).
+
+The straight-line distance between two points in 3D space uses the **3D distance formula** (an extension of the Pythagorean theorem to three dimensions):
+
+```
+chord = √[(x₂ - x₁)² + (y₂ - y₁)² + (z₂ - z₁)²]
+```
+
+This formula says: square the difference in each coordinate, add them up, and take the square root. It's the direct distance "as the crow flies" through 3D space.
+
+*If you're curious where this formula comes from, see [Appendix D: The 3D Distance Formula](AppendixD_3d_distance.md).*
+
+## Connecting to Latitude and Longitude
+
+Now here's the key: we already know from Step 2 how to convert latitude and longitude into x, y, z coordinates:
+
+```
+x = R × cos(φ) × cos(λ)
+y = R × cos(φ) × sin(λ)
+z = R × sin(φ)
+```
+
+So for our two points:
+- **Point 1:** x₁ = R × cos(φ₁) × cos(λ₁), y₁ = R × cos(φ₁) × sin(λ₁), z₁ = R × sin(φ₁)
+- **Point 2:** x₂ = R × cos(φ₂) × cos(λ₂), y₂ = R × cos(φ₂) × sin(λ₂), z₂ = R × sin(φ₂)
+
+## The Plan for Step 4
+
+In the next step, we'll:
+1. **Substitute** these coordinate formulas into the chord distance formula
+2. **Expand** the squared differences: (x₂ - x₁)², (y₂ - y₁)², (z₂ - z₁)²
+3. **Simplify** using algebra and a trigonometric identity
+4. **Combine** everything to get our final distance formula purely in terms of φ₁, λ₁, φ₂, and λ₂
+
+The geometric insight is complete—now we just need to work through the algebra!
