@@ -14,6 +14,10 @@ This appears in Step 3 when we calculate the chord length between two points on 
 
 In 2D, if you have two points P₁ = (x₁, y₁) and P₂ = (x₂, y₂), you can find the distance between them using the Pythagorean theorem.
 
+For some proofs of the Pythagorean Theorem, see:
+* https://brilliant.org/wiki/proofs-of-the-pythagorean-theorem/
+* https://www.mathsisfun.com/geometry/pythagorean-theorem-proof.html
+
 Imagine drawing a right triangle:
 - The horizontal leg has length |x₂ - x₁|
 - The vertical leg has length |y₂ - y₁|
